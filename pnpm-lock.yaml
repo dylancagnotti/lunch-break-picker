@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@solidjs/router':
+    specifier: ^0.14.1
+    version: 0.14.1(solid-js@1.8.11)
   '@supabase/supabase-js':
     specifier: ^2.44.3
     version: 2.44.3
@@ -922,6 +925,14 @@ packages:
     dependencies:
       solid-js: 1.8.11
     dev: true
+
+  /@solidjs/router@0.14.1(solid-js@1.8.11):
+    resolution: {integrity: sha512-GumQ4jbt5xDngLypAndC4EjapY/3DP0G8Az4YWEVQHdCtjHwB8IOm32eEBxE9lKpOffbtXV0r/0X0mofHJ1m5w==}
+    peerDependencies:
+      solid-js: ^1.8.6
+    dependencies:
+      solid-js: 1.8.11
+    dev: false
 
   /@supabase/auth-js@2.64.2:
     resolution: {integrity: sha512-s+lkHEdGiczDrzXJ1YWt2y3bxRi+qIUnXcgkpLSrId7yjBeaXBFygNjTaoZLG02KNcYwbuZ9qkEIqmj2hF7svw==}
