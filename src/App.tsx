@@ -1,4 +1,5 @@
 import { Component, JSXElement } from 'solid-js';
+import Header from './components/Header';
 
 interface AppProps {
   children?: JSXElement;
@@ -7,7 +8,13 @@ interface AppProps {
 const App: Component<AppProps> = (props) => {
   console.log('App');
 
-  return <>{props.children}</>;
+  return (
+    <>
+      <Header />
+
+      {props.children}
+    </>
+  );
 };
 
 export default App;
