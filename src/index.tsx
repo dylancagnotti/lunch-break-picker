@@ -4,18 +4,12 @@ import { render } from 'solid-js/web';
 import './index.css';
 import App from './App';
 import { Route, Router } from '@solidjs/router';
-import { createClient } from '@supabase/supabase-js';
-import { SupabaseProvider } from 'solid-supabase';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import { UserProvider } from './contexts/userContext';
+import { SupabaseProvider } from './contexts/supabaseContext';
 
 const root = document.getElementById('root');
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
 
 if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   throw new Error(
@@ -25,7 +19,7 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
 
 render(
   () => (
-    <SupabaseProvider client={supabase}>
+    <SupabaseProvider>
       <UserProvider>
         <Router root={App}>
           <Route path="/" component={Home} />

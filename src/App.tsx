@@ -6,12 +6,9 @@ interface AppProps {
 }
 
 const App: Component<AppProps> = (props) => {
-  console.log('App');
-
   return (
     <>
       <Header />
-
       {props.children}
     </>
   );

@@ -7,7 +7,7 @@ import {
   JSXElement,
   useContext,
 } from 'solid-js';
-import { useSupabase } from 'solid-supabase';
+import { useSupabase } from './supabaseContext';
 
 interface UserContextProps {
   children?: JSXElement;

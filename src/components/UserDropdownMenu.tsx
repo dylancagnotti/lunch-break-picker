@@ -15,9 +15,6 @@ import {
 } from './ui/dropdown-menu';
 import UserIcon from './icons/UserIcon';
 import { useNavigate } from '@solidjs/router';
-import { createEffect, createSignal } from 'solid-js';
-import { useSupabase } from 'solid-supabase';
-import { User } from '@supabase/supabase-js';
 import { useUser } from '@/contexts/userContext';
 
 const UserDropdown = () => {

@@ -1,6 +1,5 @@
 import { useNavigate } from '@solidjs/router';
 import { createEffect } from 'solid-js';
-import { useSupabase } from 'solid-supabase';
 import {
   Card,
   CardContent,
