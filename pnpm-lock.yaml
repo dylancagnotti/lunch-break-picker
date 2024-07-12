@@ -23,9 +23,6 @@ dependencies:
   solid-js:
     specifier: ^1.8.11
     version: 1.8.11
-  solid-supabase:
-    specifier: ^0.5.0
-    version: 0.5.0(@supabase/supabase-js@2.44.3)(solid-js@1.8.11)
   tailwind-merge:
     specifier: ^2.4.0
     version: 2.4.0
@@ -1983,16 +1980,6 @@ packages:
       '@babel/types': 7.23.6
       solid-js: 1.8.11
     dev: true
-
-  /solid-supabase@0.5.0(@supabase/supabase-js@2.44.3)(solid-js@1.8.11):
-    resolution: {integrity: sha512-V3oDbfY0ttc6OGijI2NK8Z1GUhdODXhGpvXRdA5NR4UW0WV1aqYf845VZh6ve320d7mBOmOBfJrIqSqE/UZcMA==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.0.0
-      solid-js: ^1.6.0
-    dependencies:
-      '@supabase/supabase-js': 2.44.3
-      solid-js: 1.8.11
-    dev: false
 
   /source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
