@@ -83,6 +83,13 @@ module.exports = {
       },
       height: {
         'no-header': 'calc(100vh - 60px)',
+        'full-no-header': 'calc(100% - 60px)',
+        '1/6': '16.666667%',
+        '5/6': '83.333333%',
+      },
+      minHeight: {
+        'no-header': 'calc(100vh - 60px)',
+        'full-no-header': 'calc(100% - 60px)',
       },
     },
   },

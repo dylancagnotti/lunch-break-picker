@@ -32,15 +32,15 @@ const Home: Component = () => {
   });
 
   return (
-    <section class="w-full flex justify-center items-center h-no-header">
-      <Tabs defaultValue="findRestaurant" class="w-11/12">
-        <TabsList>
+    <section class="w-full flex flex-col justify-start items-center min-h-full-no-header overflow-y-scroll">
+      <Tabs defaultValue="findRestaurant" class="w-11/12 h-full p-4">
+        <TabsList class="h-1/6">
           <TabsTrigger value="findRestaurant">Find a Restaurant</TabsTrigger>
           <TabsTrigger value="list">List</TabsTrigger>
           <TabsIndicator />
         </TabsList>
-        <TabsContent value="findRestaurant">
-          <Card class="h-[600px] flex flex-col justify-between">
+        <TabsContent value="findRestaurant" class="h-5/6">
+          <Card class="flex flex-col">
             <CardHeader>
               <CardTitle>Find Restaurant</CardTitle>
               <CardDescription>
@@ -63,14 +63,14 @@ const Home: Component = () => {
           </Card>
         </TabsContent>
         <TabsContent value="list">
-          <Card class="h-[600px] flex flex-col justify-center">
+          <Card class="flex flex-col">
             <CardHeader>
               <CardTitle>A list of all the restaurants.</CardTitle>
               <CardDescription>
                 You can inspect the list of all the restaurants here.
               </CardDescription>
             </CardHeader>
-            <CardContent class="space-y-2">
+            <CardContent class="space-y-2 flex flex-col justify-start items-center">
               <RestaurantsTable />
             </CardContent>
           </Card>

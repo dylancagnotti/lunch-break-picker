@@ -83,7 +83,7 @@
     height: 80%;
     width: 60%;
     border-radius: 15px;
-    overflow: hidden;
+    overflow-x: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
     margin: 2px;
