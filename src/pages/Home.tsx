@@ -22,15 +22,6 @@ import { useNavigate } from '@solidjs/router';
 import { Component, createEffect } from 'solid-js';
 
 const Home: Component = () => {
-  const { user } = useUser();
-  const navigate = useNavigate();
-
-  createEffect(() => {
-    if (!user()) {
-      navigate('/login', { replace: true });
-    }
-  });
-
   return (
     <section class="w-full flex flex-col justify-start items-center min-h-full-no-header overflow-y-scroll">
       <Tabs defaultValue="findRestaurant" class="w-11/12 h-full p-4">

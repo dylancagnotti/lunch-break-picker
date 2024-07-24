@@ -16,6 +16,7 @@ import {
 import UserIcon from './icons/UserIcon';
 import { useNavigate } from '@solidjs/router';
 import { useUser } from '@/contexts/userContext';
+import { Show } from 'solid-js';
 
 const UserDropdown = () => {
   const navigate = useNavigate();
@@ -42,14 +43,30 @@ const UserDropdown = () => {
         <DropdownMenuGroup>
           <DropdownMenuGroupLabel>My Account</DropdownMenuGroupLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <span>{user()?.email}</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Button class="w-full" onClick={logOut}>
-              Logout
-            </Button>
-          </DropdownMenuItem>
+          <Show
+            when={user() !== null}
+            fallback={
+              <DropdownMenuItem>
+                <Button
+                  class="w-full"
+                  onClick={() => {
+                    navigate('/login', { replace: true });
+                  }}
+                >
+                  Login
+                </Button>
+              </DropdownMenuItem>
+            }
+          >
+            <DropdownMenuItem>
+              <span>{user()?.email}</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Button class="w-full" onClick={logOut}>
+                Logout
+              </Button>
+            </DropdownMenuItem>
+          </Show>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
