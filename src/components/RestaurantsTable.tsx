@@ -218,7 +218,7 @@ const RestaurantsTable = () => {
                     <PlusIcon />
                   </Button>
                 </DialogTrigger>
-                <DialogContent class="max-h-[80%] overflow-y-auto">
+                <DialogContent class="max-h-[80%] overflow-y-auto max-w-[800px]">
                   <RestaurantForm
                     onSubmit={(formData) => {
                       addRestaurant({

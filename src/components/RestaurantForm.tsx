@@ -66,240 +66,244 @@ const RestaurantForm = (props: RestaurantFormProps) => {
     };
 
   return (
-    <form
-      class="flex flex-col gap-2"
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.onSubmit(unwrap(formState));
-      }}
-    >
+    <>
       <h2 class="text-xl"> Create new restaurant </h2>
-      <TextFieldRoot>
-        <TextFieldLabel>Name</TextFieldLabel>
-        <TextField
-          name="name"
-          type="text"
-          required
-          value={formState.name}
-          onChange={updateFormState('name')}
-        ></TextField>
-      </TextFieldRoot>
+      <form
+        class="flex sm:flex-wrap flex-col sm:flex-row gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          props.onSubmit(unwrap(formState));
+        }}
+      >
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Name</TextFieldLabel>
+          <TextField
+            name="name"
+            type="text"
+            required
+            value={formState.name}
+            onChange={updateFormState('name')}
+          ></TextField>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel for="bookability">Bookability</TextFieldLabel>
-        <Select
-          id="bookability"
-          name="bookability"
-          options={[1, 2, 3, 4, 5]}
-          required
-          value={formState.bookability}
-          onChange={updateFormState('bookability')}
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel for="bookability">Bookability</TextFieldLabel>
+          <Select
+            id="bookability"
+            name="bookability"
+            options={[1, 2, 3, 4, 5]}
+            required
+            value={formState.bookability}
+            onChange={updateFormState('bookability')}
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Distance</TextFieldLabel>
-        <Select
-          name="distance"
-          value={formState.distance}
-          onChange={updateFormState('distance')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Distance</TextFieldLabel>
+          <Select
+            name="distance"
+            value={formState.distance}
+            onChange={updateFormState('distance')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Food Quality</TextFieldLabel>
-        <Select
-          name="food_quality"
-          value={formState.food_quality}
-          onChange={updateFormState('food_quality')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Food Quality</TextFieldLabel>
+          <Select
+            name="food_quality"
+            value={formState.food_quality}
+            onChange={updateFormState('food_quality')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Location</TextFieldLabel>
-        <Select
-          name="location"
-          value={formState.location}
-          onChange={updateFormState('location')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Location</TextFieldLabel>
+          <Select
+            name="location"
+            value={formState.location}
+            onChange={updateFormState('location')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Plentiness</TextFieldLabel>
-        <Select
-          name="plentiness"
-          value={formState.plentiness}
-          onChange={updateFormState('plentiness')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Plentiness</TextFieldLabel>
+          <Select
+            name="plentiness"
+            value={formState.plentiness}
+            onChange={updateFormState('plentiness')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Price</TextFieldLabel>
-        <Select
-          name="price"
-          value={formState.price}
-          onChange={updateFormState('price')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Price</TextFieldLabel>
+          <Select
+            name="price"
+            value={formState.price}
+            onChange={updateFormState('price')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Service Quality</TextFieldLabel>
-        <Select
-          name="service_quality"
-          value={formState.service_quality}
-          onChange={updateFormState('service_quality')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Service Quality</TextFieldLabel>
+          <Select
+            name="service_quality"
+            value={formState.service_quality}
+            onChange={updateFormState('service_quality')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Time Back and Forth</TextFieldLabel>
-        <TextField
-          name="time_back_and_forth"
-          value={formState.time_back_and_forth}
-          onChange={updateFormState('time_back_and_forth')}
-          type="number"
-        ></TextField>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Time Back and Forth</TextFieldLabel>
+          <TextField
+            name="time_back_and_forth"
+            value={formState.time_back_and_forth}
+            onChange={updateFormState('time_back_and_forth')}
+            type="number"
+          ></TextField>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Variety</TextFieldLabel>
-        <Select
-          name="variety"
-          value={formState.variety}
-          onChange={updateFormState('variety')}
-          options={[1, 2, 3, 4, 5]}
-          required
-          itemComponent={(props) => (
-            <SelectItem item={props.item} value={props.item.rawValue}>
-              {props.item.rawValue}
-            </SelectItem>
-          )}
-        >
-          <SelectTrigger>
-            <SelectValue<string>>
-              {(state) => state.selectedOption()}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent />
-        </Select>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Variety</TextFieldLabel>
+          <Select
+            name="variety"
+            value={formState.variety}
+            onChange={updateFormState('variety')}
+            options={[1, 2, 3, 4, 5]}
+            required
+            itemComponent={(props) => (
+              <SelectItem item={props.item} value={props.item.rawValue}>
+                {props.item.rawValue}
+              </SelectItem>
+            )}
+          >
+            <SelectTrigger>
+              <SelectValue<string>>
+                {(state) => state.selectedOption()}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent />
+          </Select>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel for="has_vegetarian_options-input">
-          Has Vegetarian Options
-        </TextFieldLabel>
-        <Checkbox
-          id="has_vegetarian_options"
-          name="has_vegetarian_options"
-          checked={formState.has_vegetarian_options}
-          onChange={updateFormState('has_vegetarian_options')}
-        >
-          <CheckboxControl />
-        </Checkbox>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Google Maps Link</TextFieldLabel>
+          <TextArea
+            name="google_maps_link"
+            value={formState.google_maps_link}
+            onChange={updateFormState('google_maps_link')}
+          ></TextArea>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Google Maps Link</TextFieldLabel>
-        <TextArea
-          name="google_maps_link"
-          value={formState.google_maps_link}
-          onChange={updateFormState('google_maps_link')}
-        ></TextArea>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel>Menu Link</TextFieldLabel>
+          <TextArea
+            name="menu_link"
+            value={formState.menu_link}
+            onChange={updateFormState('menu_link')}
+          ></TextArea>
+        </TextFieldRoot>
 
-      <TextFieldRoot>
-        <TextFieldLabel>Menu Link</TextFieldLabel>
-        <TextArea
-          name="menu_link"
-          value={formState.menu_link}
-          onChange={updateFormState('menu_link')}
-        ></TextArea>
-      </TextFieldRoot>
+        <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
+          <TextFieldLabel for="has_vegetarian_options-input">
+            Has Vegetarian Options
+          </TextFieldLabel>
+          <Checkbox
+            id="has_vegetarian_options"
+            name="has_vegetarian_options"
+            checked={formState.has_vegetarian_options}
+            onChange={updateFormState('has_vegetarian_options')}
+          >
+            <CheckboxControl />
+          </Checkbox>
+        </TextFieldRoot>
 
-      <Button type="submit">Submit</Button>
-    </form>
+        <div class="w-full">
+          <Button type="submit">Submit</Button>
+        </div>
+      </form>
+    </>
   );
 };
 export default RestaurantForm;
