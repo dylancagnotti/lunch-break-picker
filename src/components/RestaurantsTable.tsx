@@ -19,12 +19,20 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { Button } from './ui/button';
 import PlusIcon from './icons/PlusIcon';
 import { Dialog, DialogContent, DialogTrigger } from './ui/dialog';
-import { Select, SelectContent, SelectTrigger, SelectValue } from './ui/select';
-import { TextField, TextFieldLabel, TextFieldRoot } from './ui/textfield';
+import { TextFieldRoot } from './ui/textfield';
+import { TextArea } from './ui/textarea';
+import RestaurantForm from './RestaurantForm';
+import { toaster } from '@kobalte/core';
+import {
+  Toast,
+  ToastContent,
+  ToastProgress,
+  ToastTitle,
+} from '@/components/ui/toast';
 
 const RestaurantsTable = () => {
   const supabase = useSupabase();
-  const [restaurants, setRestaurants] = createSignal<RestaurantSchema[]>();
+  const [restaurants, setRestaurants] = createSignal<RestaurantSchema[]>([]);
 
   const fetchRestaurants = async () => {
     const { data, error } = await supabase.from('restaurants').select();
@@ -35,6 +43,48 @@ const RestaurantsTable = () => {
     }
 
     setRestaurants(data);
+  };
+
+  const addRestaurant = async (restaurant: Partial<RestaurantSchema>) => {
+    const { error } = await supabase
+      .from('restaurants')
+      .insert([restaurant] as any);
+
+    if (error) {
+      console.error(error);
+      if (error.code === '42501') {
+        toaster.show((props) => (
+          <Toast toastId={props.toastId}>
+            <ToastContent>
+              <ToastTitle>
+                Only authenticated users can add new restaurants
+              </ToastTitle>
+            </ToastContent>
+            <ToastProgress />
+          </Toast>
+        ));
+      } else {
+        toaster.show((props) => (
+          <Toast toastId={props.toastId}>
+            <ToastContent>
+              <ToastTitle>An error occured.</ToastTitle>
+            </ToastContent>
+            <ToastProgress />
+          </Toast>
+        ));
+      }
+    } else {
+      toaster.show((props) => (
+        <Toast toastId={props.toastId}>
+          <ToastContent>
+            <ToastTitle>Restaurant added successfully</ToastTitle>
+          </ToastContent>
+          <ToastProgress />
+        </Toast>
+      ));
+    }
+
+    fetchRestaurants();
   };
 
   createEffect(() => {
@@ -82,9 +132,12 @@ const RestaurantsTable = () => {
                                 when={(value as string).length > 20}
                                 fallback={value ?? '-'}
                               >
-                                <textarea class="w-full" readonly rows={1}>
-                                  {value}
-                                </textarea>
+                                <TextFieldRoot class="w-full">
+                                  <TextArea
+                                    rows={1}
+                                    value={value as string}
+                                  ></TextArea>
+                                </TextFieldRoot>
                               </Show>
                             </Match>
                           </Switch>
@@ -159,53 +212,34 @@ const RestaurantsTable = () => {
           <TableCell />
           <TableCell>
             <div class="w-full flex justify-center">
-              <Button variant="default" class="text-xl">
-                <Dialog>
-                  <DialogTrigger>
+              <Dialog>
+                <DialogTrigger>
+                  <Button variant="default" class="text-xl">
                     <PlusIcon />
-                  </DialogTrigger>
-                  <DialogContent>
-                    <form class="flex flex-col gap-2">
-                      <TextFieldRoot>
-                        <TextFieldLabel>Name</TextFieldLabel>
-                        <TextField name="name" type="text"></TextField>
-                      </TextFieldRoot>
-                      <TextFieldRoot>
-                        <span>Distance</span>
-                        <TextField type="number" />
-                      </TextFieldRoot>
-                      <div>
-                        <label>Price</label>
-                        <Select name="price" options={['Test']}>
-                          <SelectTrigger>
-                            <SelectValue<string>>
-                              {(state) => state.selectedOption()}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent />
-                        </Select>
-                      </div>
-                      <TextFieldRoot>
-                        <TextFieldLabel>Time back and Forth</TextFieldLabel>
-                        <TextField
-                          name="time_back_and_forth"
-                          type="number"
-                        ></TextField>
-                      </TextFieldRoot>
-                      <TextFieldRoot>
-                        <TextFieldLabel>Has Vegetarian Options</TextFieldLabel>
-                        <Checkbox name="has_vegetarian_options">
-                          <CheckboxControl />
-                        </Checkbox>
-                      </TextFieldRoot>
-                      <TextFieldRoot>
-                        <TextFieldLabel>Menu Link</TextFieldLabel>
-                        <TextField name="menu_link" type="text"></TextField>
-                      </TextFieldRoot>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-              </Button>
+                  </Button>
+                </DialogTrigger>
+                <DialogContent class="max-h-[80%] overflow-y-auto">
+                  <RestaurantForm
+                    onSubmit={(formData) => {
+                      addRestaurant({
+                        name: formData.name,
+                        bookability: formData.bookability,
+                        distance: formData.distance,
+                        food_quality: formData.food_quality,
+                        location: formData.location,
+                        plentiness: formData.plentiness,
+                        price: formData.price,
+                        service_quality: formData.service_quality,
+                        time_back_and_forth: formData.time_back_and_forth,
+                        variety: formData.variety,
+                        has_vegetarian_options: formData.has_vegetarian_options,
+                        google_maps_link: formData.google_maps_link,
+                        menu_link: formData.menu_link,
+                      });
+                    }}
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </TableCell>
         </TableRow>
