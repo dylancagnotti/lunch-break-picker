@@ -29,6 +29,7 @@ import {
   ToastProgress,
   ToastTitle,
 } from '@/components/ui/toast';
+import TrashIcon from './icons/TrashIcon';
 
 const RestaurantsTable = () => {
   const supabase = useSupabase();
@@ -87,6 +88,63 @@ const RestaurantsTable = () => {
     fetchRestaurants();
   };
 
+  const updateRestaurant = async (restaurant: Partial<RestaurantSchema>) => {
+    const { error } = await supabase
+      .from('restaurants')
+      .update(restaurant)
+      .match({ id: restaurant.id });
+
+    if (error) {
+      console.error(error);
+      toaster.show((props) => (
+        <Toast toastId={props.toastId}>
+          <ToastContent>
+            <ToastTitle>An error occured.</ToastTitle>
+          </ToastContent>
+          <ToastProgress />
+        </Toast>
+      ));
+    } else {
+      toaster.show((props) => (
+        <Toast toastId={props.toastId}>
+          <ToastContent>
+            <ToastTitle>Restaurant updated successfully</ToastTitle>
+          </ToastContent>
+          <ToastProgress />
+        </Toast>
+      ));
+    }
+
+    fetchRestaurants();
+  };
+
+  const deleteRestaurant = (id: number) => async () => {
+    const { error } = await supabase.from('restaurants').delete().match({ id });
+
+    if (error) {
+      console.error(error);
+      toaster.show((props) => (
+        <Toast toastId={props.toastId}>
+          <ToastContent>
+            <ToastTitle>An error occured.</ToastTitle>
+          </ToastContent>
+          <ToastProgress />
+        </Toast>
+      ));
+    } else {
+      toaster.show((props) => (
+        <Toast toastId={props.toastId}>
+          <ToastContent>
+            <ToastTitle>Restaurant deleted successfully</ToastTitle>
+          </ToastContent>
+          <ToastProgress />
+        </Toast>
+      ));
+    }
+
+    fetchRestaurants();
+  };
+
   createEffect(() => {
     fetchRestaurants();
   });
@@ -103,6 +161,7 @@ const RestaurantsTable = () => {
           <TableHead class="text-center w-32">Has Veggie Options</TableHead>
           <TableHead class="text-center w-32">Menu</TableHead>
           <TableHead class="text-center w-32">Maps Link</TableHead>
+          <TableHead class="text-center w-32">Delete</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -113,16 +172,64 @@ const RestaurantsTable = () => {
                 <HoverCard>
                   <HoverCardTrigger>
                     <div class="w-full flex justify-center font-bold">
-                      <span class="cursor-default p-1 border border-black rounded-sm hover:bg-slate-200 transition">
-                        {restaurant.name}
-                      </span>
+                      <Dialog>
+                        <DialogTrigger>
+                          <span class="cursor-default p-1 border border-black rounded-sm hover:bg-slate-200 transition">
+                            {restaurant.name}
+                          </span>
+                        </DialogTrigger>
+                        <DialogContent class="max-h-[80%] overflow-y-auto max-w-[800px]">
+                          <RestaurantForm
+                            name={`update-${restaurant.id}`}
+                            onSubmit={(formData) => {
+                              console.log(formData);
+                              updateRestaurant({
+                                id: restaurant.id,
+                                name: formData.name,
+                                bookability: formData.bookability,
+                                distance: formData.distance,
+                                food_quality: formData.food_quality,
+                                location: formData.location,
+                                plentiness: formData.plentiness,
+                                price: formData.price,
+                                service_quality: formData.service_quality,
+                                time_back_and_forth:
+                                  formData.time_back_and_forth,
+                                variety: formData.variety,
+                                has_vegetarian_options:
+                                  formData.has_vegetarian_options,
+                                google_maps_link: formData.google_maps_link,
+                                menu_link: formData.menu_link,
+                              });
+                            }}
+                            defaultValues={{
+                              name: restaurant.name,
+                              bookability: restaurant.bookability ?? 1,
+                              distance: restaurant.distance ?? 0,
+                              food_quality: restaurant.food_quality ?? 1,
+                              location: restaurant.location ?? 1,
+                              plentiness: restaurant.plentiness ?? 1,
+                              price: restaurant.price ?? 1,
+                              service_quality: restaurant.service_quality ?? 1,
+                              time_back_and_forth:
+                                restaurant.time_back_and_forth ?? 0,
+                              variety: restaurant.variety ?? 1,
+                              has_vegetarian_options:
+                                restaurant.has_vegetarian_options ?? false,
+                              google_maps_link:
+                                restaurant.google_maps_link ?? '',
+                              menu_link: restaurant.menu_link ?? '',
+                            }}
+                          />
+                        </DialogContent>
+                      </Dialog>
                     </div>
                   </HoverCardTrigger>
                   <HoverCardContent class="w-[300px]">
                     {Object.entries(restaurant).map(([key, value]) => (
                       <div class="flex justify-between w-full gap-2">
-                        <span>{key}: </span>
-                        <span class="whitespace-nowrap text-ellipsis overflow-hidden">
+                        <span class="w-1/2">{key}: </span>
+                        <span class="w-1/2 whitespace-nowrap text-ellipsis text-right overflow-hidden">
                           <Switch fallback={value ?? '-'}>
                             <Match when={typeof value === 'boolean'}>
                               {value ? 'Yes' : 'No'}
@@ -132,7 +239,7 @@ const RestaurantsTable = () => {
                                 when={(value as string).length > 20}
                                 fallback={value ?? '-'}
                               >
-                                <TextFieldRoot class="w-full">
+                                <TextFieldRoot class="w-50%">
                                   <TextArea
                                     rows={1}
                                     value={value as string}
@@ -171,32 +278,42 @@ const RestaurantsTable = () => {
                     <CheckboxControl />
                   </Checkbox>
                 ) : (
-                  '-'
+                  <span class="w-full flex justify-center text-center">-</span>
                 )}
               </TableCell>
               <TableCell>
                 {restaurant.menu_link ? (
                   <A
+                    target="_blank"
                     href={restaurant.menu_link}
-                    class="w-full flex justify-center text-3xl"
+                    class="w-full flex justify-center text-3xl hover:text-gray-500 transition-all"
                   >
                     <MenuIcon />
                   </A>
                 ) : (
-                  '-'
+                  <span class="w-full flex justify-center text-center">-</span>
                 )}
               </TableCell>
               <TableCell>
                 {restaurant.google_maps_link ? (
                   <A
+                    target="_blank"
                     href={restaurant.google_maps_link}
-                    class="w-full flex justify-center text-3xl"
+                    class="w-full flex justify-center text-3xl hover:text-gray-500  transition-all"
                   >
                     <MapsIcon />
                   </A>
                 ) : (
-                  '-'
+                  <span class="w-full flex justify-center text-center">-</span>
                 )}
+              </TableCell>
+              <TableCell>
+                <span
+                  onClick={deleteRestaurant(restaurant.id)}
+                  class="w-full flex justify-center text-3xl hover:text-gray-500  transition-all"
+                >
+                  <TrashIcon />
+                </span>
               </TableCell>
             </TableRow>
           )}
@@ -204,6 +321,7 @@ const RestaurantsTable = () => {
       </TableBody>
       <TableFooter>
         <TableRow class="bg-white hover:bg-white border-t-2">
+          <TableCell />
           <TableCell />
           <TableCell />
           <TableCell />
@@ -220,6 +338,7 @@ const RestaurantsTable = () => {
                 </DialogTrigger>
                 <DialogContent class="max-h-[80%] overflow-y-auto max-w-[800px]">
                   <RestaurantForm
+                    name={`add-restaurant`}
                     onSubmit={(formData) => {
                       addRestaurant({
                         name: formData.name,

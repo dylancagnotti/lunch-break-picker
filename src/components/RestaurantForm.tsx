@@ -28,26 +28,34 @@ type FormState = {
   menu_link: string;
 };
 
+export const emptyFormState: FormState = {
+  name: '',
+  bookability: 1,
+  distance: 1,
+  food_quality: 1,
+  location: 1,
+  plentiness: 1,
+  price: 1,
+  service_quality: 1,
+  time_back_and_forth: 0,
+  variety: 1,
+  has_vegetarian_options: false,
+  google_maps_link: '',
+  menu_link: '',
+};
+
 interface RestaurantFormProps {
+  name: string;
   onSubmit: (formState: FormState) => void;
+  defaultValues?: FormState;
 }
 
-const RestaurantForm = (props: RestaurantFormProps) => {
-  const [formState, setFormState] = createStore<FormState>({
-    name: '',
-    bookability: 1,
-    distance: 1,
-    food_quality: 1,
-    location: 1,
-    plentiness: 1,
-    price: 1,
-    service_quality: 1,
-    time_back_and_forth: 0,
-    variety: 1,
-    has_vegetarian_options: false,
-    google_maps_link: '',
-    menu_link: '',
-  });
+const RestaurantForm = ({
+  name,
+  onSubmit,
+  defaultValues = emptyFormState,
+}: RestaurantFormProps) => {
+  const [formState, setFormState] = createStore<FormState>(defaultValues);
 
   const updateFormState =
     (fieldName: string) => (value: Event | number | string | boolean) => {
@@ -70,15 +78,17 @@ const RestaurantForm = (props: RestaurantFormProps) => {
       <h2 class="text-xl"> Create new restaurant </h2>
       <form
         class="flex sm:flex-wrap flex-col sm:flex-row gap-4"
+        name={name}
         onSubmit={(e) => {
           e.preventDefault();
-          props.onSubmit(unwrap(formState));
+          onSubmit(unwrap(formState));
         }}
       >
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Name</TextFieldLabel>
           <TextField
-            name="name"
+            name={`${name}-name`}
+            id={`${name}-name`}
             type="text"
             required
             value={formState.name}
@@ -89,8 +99,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel for="bookability">Bookability</TextFieldLabel>
           <Select
-            id="bookability"
-            name="bookability"
+            name={`${name}-bookability`}
+            id={`${name}-bookability`}
             options={[1, 2, 3, 4, 5]}
             required
             value={formState.bookability}
@@ -111,7 +121,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Distance</TextFieldLabel>
           <Select
-            name="distance"
+            name={`${name}-distance`}
+            id={`${name}-distance`}
             value={formState.distance}
             onChange={updateFormState('distance')}
             options={[1, 2, 3, 4, 5]}
@@ -132,7 +143,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Food Quality</TextFieldLabel>
           <Select
-            name="food_quality"
+            name={`${name}-food_quality`}
+            id={`${name}-food_quality`}
             value={formState.food_quality}
             onChange={updateFormState('food_quality')}
             options={[1, 2, 3, 4, 5]}
@@ -153,7 +165,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Location</TextFieldLabel>
           <Select
-            name="location"
+            name={`${name}-location`}
+            id={`${name}-location`}
             value={formState.location}
             onChange={updateFormState('location')}
             options={[1, 2, 3, 4, 5]}
@@ -174,7 +187,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Plentiness</TextFieldLabel>
           <Select
-            name="plentiness"
+            name={`${name}-plentiness`}
+            id={`${name}-plentiness`}
             value={formState.plentiness}
             onChange={updateFormState('plentiness')}
             options={[1, 2, 3, 4, 5]}
@@ -195,7 +209,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Price</TextFieldLabel>
           <Select
-            name="price"
+            name={`${name}-price`}
+            id={`${name}-price`}
             value={formState.price}
             onChange={updateFormState('price')}
             options={[1, 2, 3, 4, 5]}
@@ -216,7 +231,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Service Quality</TextFieldLabel>
           <Select
-            name="service_quality"
+            name={`${name}-service_quality`}
+            id={`${name}-service_quality`}
             value={formState.service_quality}
             onChange={updateFormState('service_quality')}
             options={[1, 2, 3, 4, 5]}
@@ -237,7 +253,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Time Back and Forth</TextFieldLabel>
           <TextField
-            name="time_back_and_forth"
+            name={`${name}-time_back_and_forth`}
+            id={`${name}-time_back_and_forth`}
             value={formState.time_back_and_forth}
             onChange={updateFormState('time_back_and_forth')}
             type="number"
@@ -247,7 +264,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Variety</TextFieldLabel>
           <Select
-            name="variety"
+            name={`${name}-variety`}
+            id={`${name}-variety`}
             value={formState.variety}
             onChange={updateFormState('variety')}
             options={[1, 2, 3, 4, 5]}
@@ -270,7 +288,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Google Maps Link</TextFieldLabel>
           <TextArea
-            name="google_maps_link"
+            name={`${name}-google_maps_link`}
+            id={`${name}-google_maps_link`}
             value={formState.google_maps_link}
             onChange={updateFormState('google_maps_link')}
           ></TextArea>
@@ -279,7 +298,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
           <TextFieldLabel>Menu Link</TextFieldLabel>
           <TextArea
-            name="menu_link"
+            name={`${name}-menu_link`}
+            id={`${name}-menu_link`}
             value={formState.menu_link}
             onChange={updateFormState('menu_link')}
           ></TextArea>
@@ -290,8 +310,8 @@ const RestaurantForm = (props: RestaurantFormProps) => {
             Has Vegetarian Options
           </TextFieldLabel>
           <Checkbox
-            id="has_vegetarian_options"
-            name="has_vegetarian_options"
+            name={`${name}-has_vegetarian_options`}
+            id={`${name}-has_vegetarian_options`}
             checked={formState.has_vegetarian_options}
             onChange={updateFormState('has_vegetarian_options')}
           >
