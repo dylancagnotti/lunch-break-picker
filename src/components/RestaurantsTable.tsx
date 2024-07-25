@@ -182,7 +182,6 @@ const RestaurantsTable = () => {
                           <RestaurantForm
                             name={`update-${restaurant.id}`}
                             onSubmit={(formData) => {
-                              console.log(formData);
                               updateRestaurant({
                                 id: restaurant.id,
                                 name: formData.name,

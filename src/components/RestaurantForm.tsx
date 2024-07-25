@@ -119,25 +119,14 @@ const RestaurantForm = ({
         </TextFieldRoot>
 
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
-          <TextFieldLabel>Distance</TextFieldLabel>
-          <Select
+          <TextFieldLabel>Distance (km)</TextFieldLabel>
+          <TextField
             name={`${name}-distance`}
             id={`${name}-distance`}
             value={formState.distance}
             onChange={updateFormState('distance')}
-            options={[1, 2, 3, 4, 5]}
             required
-            itemComponent={(props) => (
-              <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-            )}
-          >
-            <SelectTrigger>
-              <SelectValue<string>>
-                {(state) => state.selectedOption()}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent />
-          </Select>
+          ></TextField>
         </TextFieldRoot>
 
         <TextFieldRoot class="sm:w-[calc(50%-1rem)] w-full">
